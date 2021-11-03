@@ -12,7 +12,7 @@ We are looking forward to implement a set of requests you can make to the server
 
 ### Dependencies
 
-* Python v3
+* (Python3.6+)[https://www.python.org/downloads/]
 
 ### Installing
 
@@ -38,9 +38,9 @@ unavailable at this point of the development
 
 Contributors names and contact info
 
-ex. [@expl0r3rgu1] (https://twitter.com/expl0r3rgu1)
+[@expl0r3rgu1] (https://twitter.com/expl0r3rgu1)
 
-ex. [@ElektroDuck]
+[@ElektroDuck]
 
 ## Version History
 
