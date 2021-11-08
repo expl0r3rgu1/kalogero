@@ -38,9 +38,9 @@ unavailable at this point of the development
 
 Contributors names and contact info
 
-[@expl0r3rgu1] (https://twitter.com/expl0r3rgu1)
+[@expl0r3rgu1](https://github.com/expl0r3rgu1)
 
-[@ElektroDuck]
+[@ElektroDuck](https://github.com/ElektroDuck)
 
 ## Version History
 
