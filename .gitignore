@@ -128,5 +128,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-scrapers/reddit_web_scraper/*.json
-
+scrapers/reddit_web_scraper/config.json
