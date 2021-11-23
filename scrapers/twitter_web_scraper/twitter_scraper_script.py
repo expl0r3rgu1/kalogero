@@ -21,4 +21,4 @@ def get_symbol_occurrencies_in_day(symbol, date):
 #test
 occurencies = occurencies + get_symbol_occurrencies_in_day("SHIB", datetime.date.today())
 
-print(symbol + " occured " + occurencies + " times")
+print("SHIB occured " + str(occurencies) + " times")
