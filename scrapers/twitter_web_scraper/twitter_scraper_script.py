@@ -4,8 +4,6 @@ import snscrape.modules.twitter as sntwitter
 import datetime
 #import pandas as pd
 
-occurencies = 0
-
 def get_symbol_occurrencies_in_day(symbol, date):
     symbol_occurencies = 0
 
@@ -19,6 +17,4 @@ def get_symbol_occurrencies_in_day(symbol, date):
     #tweets_df = pd.read_json('text-query-tweets.json', lines=True)
 
 #test
-occurencies = occurencies + get_symbol_occurrencies_in_day("SHIB", datetime.date.today())
-
-print("SHIB occured " + str(occurencies) + " times")
+print("SHIB occured " + str(get_symbol_occurrencies_in_day("SHIB", datetime.date.today())) + " times")
