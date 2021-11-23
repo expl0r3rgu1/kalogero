@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import os
+import datetime
 
 def get_symbol_occurrencies_in_day(symbol, date):
     next_day = date.datetime.now() + date.timedelta(days=1)
