@@ -131,3 +131,4 @@ dmypy.json
 # Other
 README.md.backup
 scrapers/twitter_web_scraper/text-query-tweets.json
+*.test
