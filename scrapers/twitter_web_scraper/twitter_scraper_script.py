@@ -16,5 +16,3 @@ def get_symbol_occurrencies_in_day(symbol, date):
 
     #tweets_df = pd.read_json('text-query-tweets.json', lines=True)
 
-#test
-print("SHIB occured " + str(get_symbol_occurrencies_in_day("SHIB", datetime.date.today())) + " times")
