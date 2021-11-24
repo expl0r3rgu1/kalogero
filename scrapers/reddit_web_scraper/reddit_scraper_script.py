@@ -7,11 +7,13 @@ import json
 
 #open a file called config.json.
 try:
-    with open("config.json", "r") as file: 
+    with open("scrapers/reddit_web_scraper/config.json", "r") as file:
         config = json.load(file)
+    
+        
 
 except FileNotFoundError:
-    with open("config.json", "w") as file: 
+    with open("scrapers/reddit_web_scraper/config.json", "w") as file: 
         config = {
             "client_id": "",
             "secret": "", 
@@ -19,6 +21,7 @@ except FileNotFoundError:
             "reddit_password": ""
         }
         json.dump(config, file, indent=4)
+
 
 id = config["client_id"]
 secret = config["secret"]
@@ -36,7 +39,7 @@ reddit = praw.Reddit(
 
 if reddit.user.me() is None:
     print("login failed, check credentials")
-        exit(403)
+    exit(403)
     
 
 #if the log in is correct will print the reddit username
