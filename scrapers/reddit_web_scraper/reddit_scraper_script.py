@@ -4,6 +4,8 @@
 from typing import Counter
 import praw
 import json
+from datetime import datetime
+
 
 # open a file called config.json.
 try:
@@ -48,7 +50,7 @@ print("\n")
 
 #subreddit = reddit.subreddit("wallstreetbets")
 
-new_wallstreetbest = reddit.subreddit("wallstreetbets").hot(limit=15)
+new_wallstreetbest = reddit.subreddit("wallstreetbets").new(limit=15)
 
 counter = 0
 
@@ -60,6 +62,9 @@ for submission in new_wallstreetbest:
         if (submission.selftext):
             print("Text:", submission.selftext)
         print("Score:", submission.score)
+        #check date
+        date = datetime.utcfromtimestamp(submission.created_utc)
+        print("year: " + str(date.year) + " month: " + str(date.month) + " day: " + str(date.day) + " hour: " + str(date.hour) + ":" + str(date.minute) + ":" + str(date.second))
         print("-----------------------\n")
         counter = counter + 1
 
