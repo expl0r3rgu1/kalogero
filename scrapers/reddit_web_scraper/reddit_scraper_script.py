@@ -6,8 +6,19 @@ import praw
 import json
 
 #open a file called config.json.
-with open("config.json", "r") as file: 
-    config = json.load(file)
+try:
+    with open("config.json", "r") as file: 
+        config = json.load(file)
+
+except FileNotFoundError:
+    with open("config.json", "w") as file: 
+        config = {
+            "client_id": "",
+            "secret": "", 
+            "reddit_username": "",
+            "reddit_password": ""
+        }
+        json.dump(config, file, indent=4)
 
 id = config["client_id"]
 secret = config["secret"]
@@ -21,7 +32,12 @@ reddit = praw.Reddit(
     password = reddit_password,
     user_agent = "kalogero by" + reddit_username,
     username = reddit_username,
-)
+) 
+
+if reddit.user.me() is None:
+    print("login failed, check credentials")
+        exit(403)
+    
 
 #if the log in is correct will print the reddit username
 print("\n")
