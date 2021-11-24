@@ -5,16 +5,20 @@ from typing import Counter
 import praw
 import json
 from datetime import datetime
-
+import os
 
 # open a file called config.json.
+
+#dir = __file__.rsplit("")
+dir = os.path.dirname(os.path.realpath(__file__))
+
 try:
-    with open("scrapers/reddit_web_scraper/config.json", "r") as file:
+    with open(dir + "/config.json", "r") as file:
         config = json.load(file)
 
 
 except FileNotFoundError:
-    with open("scrapers/reddit_web_scraper/config.json", "w") as file:
+    with open(dir + "/config.json", "w") as file:
         config = {
             "client_id": "",
             "secret": "",
