@@ -9,6 +9,13 @@ import os
 from praw.models import subreddits
 
 
+def sameDay(date1, date2):
+    if date1 == date2: 
+        return True
+    else:
+        return False
+
+
 # open a file called config.json.
 dir = os.path.dirname(os.path.realpath(__file__))
 
@@ -62,7 +69,12 @@ subredditsToCheck = config["subreddits"]
 
 for subredditChecking in subredditsToCheck:
     print("\n \n \n analizing subreddit:" + subredditChecking)
-    
+
+    for submission in reddit.subreddit(subredditChecking).new():
+        if not submission.stickied:
+            firstDate = datetime.utcfromtimestamp(submission.created_utc)
+
+    #for infinite post delete "limit = 5"
     for submission in reddit.subreddit(subredditChecking).new(limit = 5):
         if not submission.stickied:
             print(str(counter) + ") \n")
