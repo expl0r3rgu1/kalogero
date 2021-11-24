@@ -1,15 +1,15 @@
 #!/usr/bin/python3
 
-
 from typing import Counter
 import praw
 import json
 from datetime import datetime
 import os
 
-# open a file called config.json.
+from praw.models import subreddits
 
-#dir = __file__.rsplit("")
+
+# open a file called config.json.
 dir = os.path.dirname(os.path.realpath(__file__))
 
 try:
@@ -23,54 +23,57 @@ except FileNotFoundError:
             "client_id": "",
             "secret": "",
             "reddit_username": "",
-            "reddit_password": ""
+            "reddit_password": "", 
+            "subreddits": ""
         }
         json.dump(config, file, indent=4)
+        print("file config.json not found. It has been created in " + dir)
+        print("please controll it and fill the blank fields")
 
-
-id = config["client_id"]
-secret = config["secret"]
-reddit_username = config["reddit_username"]
-reddit_password = config["reddit_password"]
-
+#controll if there are blank field in config.json 
+if config["client_id"] == "" or config["secret"] == "" or config["reddit_username"] == "" or config["reddit_password"] == "":
+    print("ERROR: controll the file config.json and instert the credential \n you can find the file in the path: " + dir)
+    exit()
+    
 # configure the bot
 reddit = praw.Reddit(
-    client_id=id,
-    client_secret=secret,
-    password=reddit_password,
-    user_agent="kalogero by" + reddit_username,
-    username=reddit_username,
+    client_id =     config["client_id"],
+    client_secret=  config["secret"],
+    password=       config["reddit_password"],
+    username=       config["reddit_username"],
+    user_agent=     "kalogero",
 )
 
-if reddit.user.me() is None:
+#if the login fail the program end
+#check OAuthException plz
+if reddit.user.me() is None: 
     print("login failed, check credentials")
-    exit(403)
+    exit()
 
-
-# if the log in is correct will print the reddit username
-print("\n")
-print(reddit.user.me())
-print("\n")
 
 #subreddit = reddit.subreddit("wallstreetbets")
-
-new_wallstreetbest = reddit.subreddit("wallstreetbets").new(limit=15)
+#new_wallstreetbest = reddit.subreddit("wallstreetbets").new(limit=15)
+#new_wallstreetbest = reddit.subreddit("wallstreetbets").new("all")
 
 counter = 0
 
-for submission in new_wallstreetbest:
-    if not submission.stickied:
-        print(counter)
-        print(") \n")
-        print("Title:", submission.title)
-        if (submission.selftext):
-            print("Text:", submission.selftext)
-        print("Score:", submission.score)
-        #check date
-        date = datetime.utcfromtimestamp(submission.created_utc)
-        print("year: " + str(date.year) + " month: " + str(date.month) + " day: " + str(date.day) + " hour: " + str(date.hour) + ":" + str(date.minute) + ":" + str(date.second))
-        print("-----------------------\n")
-        counter = counter + 1
+#for submission in new_wallstreetbest:
+subredditsToCheck = config["subreddits"]
 
+for subredditChecking in subredditsToCheck:
+    print("\n \n \n analizing subreddit:" + subredditChecking)
+    
+    for submission in reddit.subreddit(subredditChecking).new(limit = 5):
+        if not submission.stickied:
+            print(str(counter) + ") \n")
+            print("Title:", submission.title)
+            if (submission.selftext):
+                print("Text:", submission.selftext)
+            print("Score:", submission.score)
+            #check date
+            date = datetime.utcfromtimestamp(submission.created_utc)
+            print("year: " + str(date.year) + " month: " + str(date.month) + " day: " + str(date.day) + " hour: " + str(date.hour) + ":" + str(date.minute) + ":" + str(date.second))
+            print("-----------------------\n")
+            counter = counter + 1
 
 pass
