@@ -17,28 +17,31 @@ def sameDay(date1, date2):
         return False
 
 
+def openFileConfig():
+    dir = os.path.dirname(os.path.realpath(__file__))
+    try:
+        with open(dir + "/config.json", "r") as file:
+            config = json.load(file)
+            return config
+    except FileNotFoundError:
+        with open(dir + "/config.json", "w") as file:
+            config = {
+                "client_id": "",
+                "secret": "",
+                "reddit_username": "",
+                "reddit_password": "", 
+                "subreddits": ["", "", ""]
+            }
+            json.dump(config, file, indent=4)
+            print("file config.json not found. It has been created in " + dir)
+            print("please controll it and fill the blank fields")
+            exit()
+            
+    
 
 
 # open a file called config.json.
-dir = os.path.dirname(os.path.realpath(__file__))
-
-try:
-    with open(dir + "/config.json", "r") as file:
-        config = json.load(file)
-
-
-except FileNotFoundError:
-    with open(dir + "/config.json", "w") as file:
-        config = {
-            "client_id": "",
-            "secret": "",
-            "reddit_username": "",
-            "reddit_password": "", 
-            "subreddits": ["", "", ""]
-        }
-        json.dump(config, file, indent=4)
-        print("file config.json not found. It has been created in " + dir)
-        print("please controll it and fill the blank fields")
+config = openFileConfig()
 
 #controll if there are blank field in config.json 
 if config["client_id"] == "" or config["secret"] == "" or config["reddit_username"] == "" or config["reddit_password"] == "" or config["subreddits"] == [""]:
