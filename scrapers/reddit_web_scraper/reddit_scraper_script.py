@@ -48,7 +48,7 @@ def checkLogin(reddit):
     except OAuthException:
         print("login failed, check credentials")
         exit()  
-    
+
 
 # open a file called config.json.
 config = openFileConfig()
