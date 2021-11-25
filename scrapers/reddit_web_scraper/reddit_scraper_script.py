@@ -11,10 +11,12 @@ from prawcore.exceptions import OAuthException
 
 
 def sameDay(date1, date2):
-    if date1 == date2: 
+    if date1.date() == date2.date():
         return True
     else:
         return False
+
+
 
 
 # open a file called config.json.
@@ -39,7 +41,7 @@ except FileNotFoundError:
         print("please controll it and fill the blank fields")
 
 #controll if there are blank field in config.json 
-if config["client_id"] == "" or config["secret"] == "" or config["reddit_username"] == "" or config["reddit_password"] == "":
+if config["client_id"] == "" or config["secret"] == "" or config["reddit_username"] == "" or config["reddit_password"] == "" or config["subreddits"] == [""]:
     print("ERROR: controll the file config.json and instert the credential \n you can find the file in the path: " + dir)
     exit()
     
@@ -53,6 +55,8 @@ reddit = praw.Reddit(
 )
 
 #if the login fail the program end
+
+
 try: 
     reddit.user.me()
 except OAuthException:
@@ -75,19 +79,22 @@ for subredditChecking in subredditsToCheck:
     for submission in reddit.subreddit(subredditChecking).new():
         if not submission.stickied:
             firstDate = datetime.utcfromtimestamp(submission.created_utc)
+            break
 
     #for infinite post delete "limit = 5"
-    for submission in reddit.subreddit(subredditChecking).new(limit = 5):
-        if not submission.stickied:
-            print(str(counter) + ") \n")
-            print("Title:", submission.title)
-            if (submission.selftext):
-                print("Text:", submission.selftext)
-            print("Score:", submission.score)
-            #check date
-            date = datetime.utcfromtimestamp(submission.created_utc)
-            print("year: " + str(date.year) + " month: " + str(date.month) + " day: " + str(date.day) + " hour: " + str(date.hour) + ":" + str(date.minute) + ":" + str(date.second))
-            print("-----------------------\n")
-            counter = counter + 1
-
-pass
+    for submission in reddit.subreddit(subredditChecking).new():
+        submissionDate = datetime.utcfromtimestamp(submission.created_utc)
+        if sameDay(firstDate, submissionDate):
+            if not submission.stickied:
+                print(str(counter) + ") \n")
+                print("Title:", submission.title)
+                if (submission.selftext):
+                    print("Text:", submission.selftext)
+                print("Score:", submission.score)
+                #check date
+                date = datetime.utcfromtimestamp(submission.created_utc)
+                print("year: " + str(date.year) + " month: " + str(date.month) + " day: " + str(date.day) + " hour: " + str(date.hour) + ":" + str(date.minute) + ":" + str(date.second))
+                print("-----------------------\n")
+                counter = counter + 1
+        else: 
+            break
