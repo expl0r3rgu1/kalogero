@@ -37,17 +37,19 @@ def openFileConfig():
             print("please controll it and fill the blank fields")
             exit()
             
-    
+def checkConfigOk(config):
+    if config["client_id"] == "" or config["secret"] == "" or config["reddit_username"] == "" or config["reddit_password"] == "" or config["subreddits"] == [""]:
+        print("ERROR: controll the file config.json and instert the credential \n you can find the file in the path: " + dir)
+        exit()
+
 
 
 # open a file called config.json.
 config = openFileConfig()
 
 #controll if there are blank field in config.json 
-if config["client_id"] == "" or config["secret"] == "" or config["reddit_username"] == "" or config["reddit_password"] == "" or config["subreddits"] == [""]:
-    print("ERROR: controll the file config.json and instert the credential \n you can find the file in the path: " + dir)
-    exit()
-    
+checkConfigOk(config)
+
 # configure the bot
 reddit = praw.Reddit(
     client_id =     config["client_id"],
