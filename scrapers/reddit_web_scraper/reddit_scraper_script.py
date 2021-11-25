@@ -7,6 +7,7 @@ from datetime import datetime
 import os
 
 from praw.models import subreddits
+from prawcore.exceptions import OAuthException
 
 
 def sameDay(date1, date2):
@@ -52,10 +53,11 @@ reddit = praw.Reddit(
 )
 
 #if the login fail the program end
-#check OAuthException plz
-if reddit.user.me() is None: 
+try: 
+    reddit.user.me()
+except OAuthException:
     print("login failed, check credentials")
-    exit()
+    exit()  
 
 
 #subreddit = reddit.subreddit("wallstreetbets")
