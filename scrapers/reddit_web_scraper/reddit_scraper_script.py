@@ -42,7 +42,13 @@ def checkConfigOk(config):
         print("ERROR: controll the file config.json and instert the credential \n you can find the file in the path: " + dir)
         exit()
 
-
+def checkLogin(reddit): 
+    try: 
+        reddit.user.me()
+    except OAuthException:
+        print("login failed, check credentials")
+        exit()  
+    
 
 # open a file called config.json.
 config = openFileConfig()
@@ -60,14 +66,7 @@ reddit = praw.Reddit(
 )
 
 #if the login fail the program end
-
-
-try: 
-    reddit.user.me()
-except OAuthException:
-    print("login failed, check credentials")
-    exit()  
-
+checkLogin(reddit)
 
 #subreddit = reddit.subreddit("wallstreetbets")
 #new_wallstreetbest = reddit.subreddit("wallstreetbets").new(limit=15)
