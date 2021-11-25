@@ -31,7 +31,7 @@ except FileNotFoundError:
             "secret": "",
             "reddit_username": "",
             "reddit_password": "", 
-            "subreddits": ""
+            "subreddits": ["", "", ""]
         }
         json.dump(config, file, indent=4)
         print("file config.json not found. It has been created in " + dir)
