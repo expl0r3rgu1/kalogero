@@ -50,6 +50,11 @@ def checkLogin(reddit):
         print("login failed, check credentials")
         exit()  
 
+def printOccurences(symbols, symbolsOccurrence):
+    print("occurrency of symbols:")
+    for idx in enumerate(symbols, start = 0):
+        print(idx[1],":", symbolsOccurrence[idx[0]])
+
 # open a file called config.json.
 config = openFileConfig()
 
@@ -68,19 +73,14 @@ reddit = praw.Reddit(
 #if the login fail the program end
 checkLogin(reddit)
 
-#subreddit = reddit.subreddit("wallstreetbets")
-#new_wallstreetbest = reddit.subreddit("wallstreetbets").new(limit=15)
-#new_wallstreetbest = reddit.subreddit("wallstreetbets").new("all")
-
-
+#initialize variables taking the value from the file config.json
 subredditsToCheck = config["subreddits"]
 symbols = config["symbols"]
-#initialize array for saving the result of the occurrency check
+
+#initialize array for saving the result of the occurrency check.
 symbolsOccurrence = [] 
 for i in range(len(symbols)):
        symbolsOccurrence.append(0)
-
-
 
 counter = 0
 for subredditChecking in subredditsToCheck:
@@ -113,8 +113,7 @@ for subredditChecking in subredditsToCheck:
                         symbolsOccurrence[idx[0]] += 1 
         else: 
             break
-    print("occurrency of symbols:")
-    for idx in enumerate(symbols, start = 0):
-        print(idx[1],":", symbolsOccurrence[idx[0]])
+    printOccurences(symbols, symbolsOccurrence)
+    
         
     
