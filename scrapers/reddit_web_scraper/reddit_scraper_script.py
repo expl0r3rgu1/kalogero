@@ -95,17 +95,8 @@ for subredditChecking in subredditsToCheck:
         submissionDate = datetime.utcfromtimestamp(submission.created_utc)
         if sameDay(firstDate, submissionDate):
             if not submission.stickied:
-                print(str(counter) + ") \n")
-                print("Title:", submission.title)
-                if (submission.selftext):
-                    print("Text:", submission.selftext)
-                print("Score:", submission.score)
-                #check date
-                date = datetime.utcfromtimestamp(submission.created_utc)
-                print("year: " + str(date.year) + " month: " + str(date.month) + " day: " + str(date.day) + " hour: " + str(date.hour) + ":" + str(date.minute) + ":" + str(date.second))
-                print("-----------------------\n")
                 counter = counter + 1
-                
+                #textcheck contains the title and text of the post in lower case
                 textocheck = (submission.title + submission.selftext).lower()
                 #count occurrences
                 for idx in enumerate(symbols, start = 0):
@@ -113,7 +104,7 @@ for subredditChecking in subredditsToCheck:
                         symbolsOccurrence[idx[0]] += 1 
         else: 
             break
-    printOccurences(symbols, symbolsOccurrence)
     
+printOccurences(symbols, symbolsOccurrence)
         
     
