@@ -30,7 +30,8 @@ def openFileConfig():
                 "secret": "",
                 "reddit_username": "",
                 "reddit_password": "", 
-                "subreddits": ["", "", ""]
+                "subreddits": ["", "", ""],
+                "symbols" : ["", "", ""]
             }
             json.dump(config, file, indent=4)
             print("file config.json not found. It has been created in " + dir)
@@ -48,7 +49,6 @@ def checkLogin(reddit):
     except OAuthException:
         print("login failed, check credentials")
         exit()  
-
 
 # open a file called config.json.
 config = openFileConfig()
@@ -72,11 +72,17 @@ checkLogin(reddit)
 #new_wallstreetbest = reddit.subreddit("wallstreetbets").new(limit=15)
 #new_wallstreetbest = reddit.subreddit("wallstreetbets").new("all")
 
-counter = 0
 
-#for submission in new_wallstreetbest:
 subredditsToCheck = config["subreddits"]
+symbols = config["symbols"]
+#initialize array for saving the result of the occurrency check
+symbolsOccurrence = [] 
+for i in range(len(symbols)):
+       symbolsOccurrence.append(0)
 
+
+
+counter = 0
 for subredditChecking in subredditsToCheck:
     print("\n \n \n analizing subreddit:" + subredditChecking)
 
@@ -85,7 +91,6 @@ for subredditChecking in subredditsToCheck:
             firstDate = datetime.utcfromtimestamp(submission.created_utc)
             break
 
-    #for infinite post delete "limit = 5"
     for submission in reddit.subreddit(subredditChecking).new():
         submissionDate = datetime.utcfromtimestamp(submission.created_utc)
         if sameDay(firstDate, submissionDate):
@@ -100,5 +105,16 @@ for subredditChecking in subredditsToCheck:
                 print("year: " + str(date.year) + " month: " + str(date.month) + " day: " + str(date.day) + " hour: " + str(date.hour) + ":" + str(date.minute) + ":" + str(date.second))
                 print("-----------------------\n")
                 counter = counter + 1
+                
+                textocheck = (submission.title + submission.selftext).lower()
+                #count occurrences
+                for idx in enumerate(symbols, start = 0):
+                    if idx[1] in textocheck:
+                        symbolsOccurrence[idx[0]] += 1 
         else: 
             break
+    print("occurrency of symbols:")
+    for idx in enumerate(symbols, start = 0):
+        print(idx[1],":", symbolsOccurrence[idx[0]])
+        
+    
