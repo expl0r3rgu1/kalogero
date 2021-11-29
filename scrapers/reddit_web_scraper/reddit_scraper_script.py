@@ -55,6 +55,9 @@ def printOccurences(symbols, symbolsOccurrence):
     for idx in enumerate(symbols, start = 0):
         print(idx[1],":", symbolsOccurrence[idx[0]])
 
+
+#--------------------program starts here---------------------
+
 # open a file called config.json.
 config = openFileConfig()
 
@@ -74,7 +77,7 @@ reddit = praw.Reddit(
 checkLogin(reddit)
 
 #initialize variables taking the value from the file config.json
-subredditsToCheck = config["subreddits"]
+subreddits = config["subreddits"]
 symbols = config["symbols"]
 
 #initialize array for saving the result of the occurrency check.
@@ -83,15 +86,15 @@ for i in range(len(symbols)):
        symbolsOccurrence.append(0)
 
 counter = 0
-for subredditChecking in subredditsToCheck:
-    print("\n \n \n analizing subreddit:" + subredditChecking)
+for subreddit in subreddits:
+    print("\n \n \n analizing subreddit:" + subreddit)
 
-    for submission in reddit.subreddit(subredditChecking).new():
+    for submission in reddit.subreddit(subreddit).new():
         if not submission.stickied:
             firstDate = datetime.utcfromtimestamp(submission.created_utc)
             break
 
-    for submission in reddit.subreddit(subredditChecking).new():
+    for submission in reddit.subreddit(subreddit).new():
         submissionDate = datetime.utcfromtimestamp(submission.created_utc)
         if sameDay(firstDate, submissionDate):
             if not submission.stickied:
