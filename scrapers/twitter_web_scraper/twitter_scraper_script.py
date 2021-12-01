@@ -16,10 +16,10 @@ def get_symbol_occurrencies_in_day(symbol, date):
     return symbol_occurencies
 
 
-def get_crypto_occurrencies_in_day(symbol_list, date):
+def get_crypto_occurrencies_in_day(symbols_list, date):
     occurencies = 0
 
-    for symbol in symbol_list:
+    for symbol in symbols_list:
         occurencies = occurencies + get_symbol_occurrencies_in_day(symbol, date)
 
     return occurrencies
