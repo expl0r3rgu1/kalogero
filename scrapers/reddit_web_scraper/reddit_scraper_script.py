@@ -32,7 +32,8 @@ def openFileConfig():
                 "reddit_username": "",
                 "reddit_password": "", 
                 "subreddits": ["", "", ""],
-                "symbols" : ["", "", ""]
+                "symbols" : ["", "", ""], 
+                "period" : ["",""]
             }
             json.dump(config, file, indent=4)
             print("file config.json not found. It has been created in " + dir)
@@ -72,8 +73,6 @@ firstDate = date(2001,5,4)
 print(firstDate)
 #----------------------------------------------------------
 
-
-
 # open a file called config.json.
 config = openFileConfig()
 
@@ -95,6 +94,10 @@ checkLogin(reddit)
 #initialize variables taking the value from the file config.json
 subreddits = config["subreddits"]
 symbols = config["symbols"]
+period = config["period"]
+
+startPeriod = time.mktime(datetime.strptime(period[0] , "%d/%m/%Y").timetuple())
+stopPeriod = time.mktime(datetime.strptime(period[1] , "%d/%m/%Y").timetuple())
 
 #initialize array for saving the result of the occurrency check.
 symbolsOccurrence = [] 
