@@ -120,6 +120,9 @@ for subreddit in subreddits:
         submissionDate = datetime.utcfromtimestamp(submission.created_utc)
         if sameDay(firstDate, submissionDate):
             if not submission.stickied:
+                #here is where to put a for to initiate the first submit to check in the time period selected
+            
+
                 #textcheck contains the title and text of the post in lower case
                 textocheck = (submission.title + submission.selftext).lower()
                 #count occurrences
