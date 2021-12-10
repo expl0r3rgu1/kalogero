@@ -17,6 +17,11 @@ def sameDay(date1, date2):
     else:
         return False
 
+def inPeriod(postDate, endPeriod):
+    if postDate <= endPeriod:
+        return True
+    return False
+
 
 def openFileConfig():
     dir = os.path.dirname(os.path.realpath(__file__))
@@ -68,6 +73,8 @@ s = "01/12/2011"
 print(time.mktime(datetime.strptime(s, "%d/%m/%Y").timetuple()))
 
 #1322697600.0
+dateDate = datetime.strptime(s, "%d/%m/%Y"); 
+print(dateDate)
 
 firstDate = date(2001,5,4)
 print(firstDate)
@@ -113,16 +120,16 @@ for subreddit in subreddits:
     #        firstDate = datetime.utcfromtimestamp(submission.created_utc)
     #        break
 
-    #insert here the code for find the first submission of the chosen day
-
 
     for submission in reddit.subreddit(subreddit).new():
-        submissionDate = datetime.utcfromtimestamp(submission.created_utc)
+        #submissionDate = datetime.utcfromtimestamp(submission.created_utc)
+        submissionDate = submission.created_utc
+
+        #here is where to put a for to initiate the first submit to check in the time period selected
+        
+
         if sameDay(firstDate, submissionDate):
             if not submission.stickied:
-                #here is where to put a for to initiate the first submit to check in the time period selected
-            
-
                 #textcheck contains the title and text of the post in lower case
                 textocheck = (submission.title + submission.selftext).lower()
                 #count occurrences
