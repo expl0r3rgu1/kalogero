@@ -18,7 +18,7 @@ def sameDay(date1, date2):
         return False
 
 def inPeriod(postDate, endPeriod):
-    if postDate <= endPeriod:
+    if postDate >= endPeriod:
         return True
     return False
 
@@ -109,7 +109,7 @@ stopPeriod = time.mktime(datetime.strptime(period[1] , "%d/%m/%Y").timetuple())
 #initialize array for saving the result of the occurrency check.
 symbolsOccurrence = [] 
 for i in range(len(symbols)):
-       symbolsOccurrence.append(0)
+    symbolsOccurrence.append(0)
 
 counter = 0
 for subreddit in subreddits:
@@ -120,25 +120,23 @@ for subreddit in subreddits:
     #        firstDate = datetime.utcfromtimestamp(submission.created_utc)
     #        break
 
-
     for submission in reddit.subreddit(subreddit).new():
         #submissionDate = datetime.utcfromtimestamp(submission.created_utc)
         submissionDate = submission.created_utc
-
-        #here is where to put a for to initiate the first submit to check in the time period selected
+        print(datetime.utcfromtimestamp(submission.created_utc))
         
+        if submissionDate <= startPeriod:
+            if inPeriod(submissionDate, startPeriod):
+                if not submission.stickied:
+                    #textcheck contains the title and text of the post in lower case
+                    textocheck = (submission.title + submission.selftext).lower()
+                    #count occurrences
+                    for idx in enumerate(symbols, start = 0):
+                        if idx[1] in textocheck:
+                            symbolsOccurrence[idx[0]] += 1 
+            else: 
+                break
 
-        if sameDay(firstDate, submissionDate):
-            if not submission.stickied:
-                #textcheck contains the title and text of the post in lower case
-                textocheck = (submission.title + submission.selftext).lower()
-                #count occurrences
-                for idx in enumerate(symbols, start = 0):
-                    if idx[1] in textocheck:
-                        symbolsOccurrence[idx[0]] += 1 
-        else: 
-            break
-    
 printOccurences(symbols, symbolsOccurrence)
         
     
