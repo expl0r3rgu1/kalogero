@@ -12,7 +12,7 @@ We are looking forward to implement a set of requests you can make to the server
 
 ### Dependencies
 
-* (Python3.6+)[https://www.python.org/downloads/]
+* [Python3.6+](https://www.python.org/downloads/)
 
 ### Installing
 
